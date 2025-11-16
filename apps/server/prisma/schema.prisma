@@ -50,16 +50,15 @@ model File {
 model OperationLog {
   id            Int      @id @default(autoincrement())
   userId        Int
-  operation     String   @db.VarChar(20) // 允许值：UPLOAD, DOWNLOAD, DELETE, UPDATE, LOGIN, UPDATE_USER
-  targetType    String   @db.VarChar(10) // 允许值：FILE, USER
-  targetId      Int // 注意：targetId 是必填项
+  operation     String   @db.VarChar(20) // 允许值：UPLOAD, DOWNLOAD, DELETE,  LOGIN
+  fileId        Int? // 注意
   operationTime DateTime @default(now())
 
   user User  @relation("UserOperations", fields: [userId], references: [id], onDelete: Cascade)
   // 关键修改：将 onDelete: SetNull 改为 Cascade
-  file File? @relation("FileOperations", fields: [targetId], references: [id], onDelete: Cascade)
+  file File? @relation("FileOperations", fields: [fileId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([operationTime])
-  @@index([targetType, targetId])
+  @@index([fileId])
 }

@@ -6,8 +6,7 @@ declare namespace NodeJS {
 
     // JWT
     JWT_SECRET: string
-    JWT_ACCESS_EXPIRES_IN?: string
-    JWT_REFRESH_EXPIRES_IN?: string
+    JWT_EXPIRES_IN: string
 
     // OSS
     OSS_REGION: string

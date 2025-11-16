@@ -46,7 +46,6 @@ export const validatorMiddleware =
           message: message || MESSAGE.INVALID_PARAMS,
         })
       }
-      req.body = paramsResult.data
     }
     next()
   }

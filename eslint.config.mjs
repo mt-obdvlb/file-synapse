@@ -9,7 +9,6 @@ import pluginReactHooks from 'eslint-plugin-react-hooks'
 import turboPlugin from 'eslint-plugin-turbo'
 import { defineConfig } from 'eslint/config'
 import tseslint from 'typescript-eslint'
-import eslintPluginImport from 'eslint-plugin-import'
 
 export default defineConfig([
   js.configs.recommended,
@@ -71,29 +70,6 @@ export default defineConfig([
   {
     files: ['**/*.json', '**/*.jsonc', '**/*.json5'],
     ...json.configs.recommended,
-  },
-  {
-    plugins: {
-      import: eslintPluginImport,
-    },
-    settings: {
-      'import/resolver': {
-        typescript: {
-          project: ['./tsconfig.json', './apps/*/tsconfig.json', './packages/*/tsconfig.json'],
-        },
-      },
-    },
-    rules: {
-      'import/order': [
-        'warn',
-        {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-          'newlines-between': 'always',
-        },
-      ],
-      'import/no-unresolved': 'error',
-    },
-    files: ['**/*.ts', '**/*.tsx'],
   },
 
   {
