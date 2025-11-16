@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL") // 从环境变量读取数据库连接地址
+}
+
+// 用户表：存储系统用户信息及权限
+model User {
+  id        Int      @id @default(autoincrement()) // 用户唯一ID（自增）
+  username  String   @unique @db.VarChar(20) // 登录用户名（唯一，最大20位）
+  password  String   @db.VarChar(100) // 加密存储的密码（预留加密后长度）
+  role      Int      @default(2) // 权限等级：1=管理员，2=普通用户
+  createdAt DateTime @default(now()) // 创建时间
+  updatedAt DateTime @updatedAt // 更新时间
+
+  // 关联关系：一个用户可上传多个文件
+  files      File[]         @relation("FileUploader")
+  // 关联关系：一个用户可产生多条操作记录
+  operations OperationLog[] @relation("UserOperations")
+
+  @@index([username]) // 用户名索引，加速登录查询
+}
+
+// 文件表：存储文件元数据（实际文件存储在服务器/云存储，此处记录路径）
+model File {
+  id          Int      @id @default(autoincrement()) // 文件唯一ID（自增）
+  name        String   @db.VarChar(50) // 文件名（最大50位）
+  description String?  @db.VarChar(200) // 文件描述（可选，最大200位）
+  type        String   @db.VarChar(20) // 文件类型（如doc、jpg、mp4）
+  path        String   @db.VarChar(255) // 存储路径（本地路径或云存储URL）
+  size        Int // 文件大小（单位：B）
+  uploadTime  DateTime @default(now()) // 上传时间
+  uploaderId  Int // 上传者ID（关联User表）
+  updatedAt   DateTime @updatedAt // 最后修改时间
+
+  // 关联关系：文件归属的上传用户
+  uploader   User           @relation("FileUploader", fields: [uploaderId], references: [id], onDelete: Cascade)
+  // 关联关系：文件被操作的记录
+  operations OperationLog[] @relation("FileOperations")
+
+  @@index([uploaderId]) // 按上传者ID索引，加速查询用户上传的文件
+  @@index([name]) // 按文件名索引，加速文件搜索
+  @@index([uploadTime]) // 按上传时间索引，支持按时间筛选
+}
+
+// 操作日志表：记录用户对文件/系统的所有操作
+model OperationLog {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  operation     String   @db.VarChar(20) // 允许值：UPLOAD, DOWNLOAD, DELETE, UPDATE, LOGIN, UPDATE_USER
+  targetType    String   @db.VarChar(10) // 允许值：FILE, USER
+  targetId      Int // 注意：targetId 是必填项
+  operationTime DateTime @default(now())
+
+  user User  @relation("UserOperations", fields: [userId], references: [id], onDelete: Cascade)
+  // 关键修改：将 onDelete: SetNull 改为 Cascade
+  file File? @relation("FileOperations", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([operationTime])
+  @@index([targetType, targetId])
+}
