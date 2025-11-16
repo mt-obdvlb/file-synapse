@@ -26,14 +26,14 @@ export default defineConfig([
   },
 
   {
-    ignores: ['dist/**', 'apps/web/public'],
+    ignores: ['dist/**', 'app/web/public'],
   },
 
   {
     plugins: {
       turbo: turboPlugin,
     },
-    files: ['apps/**', 'packages/**'],
+    files: ['app/**', 'packages/**'],
   },
 
   {
@@ -51,7 +51,7 @@ export default defineConfig([
       ...pluginNext.configs['core-web-vitals'].rules,
       ...pluginNext.configs['strict'],
     },
-    files: ['apps/web/**'],
+    files: ['app/web/**'],
   },
 
   {
@@ -64,7 +64,7 @@ export default defineConfig([
       ...pluginReactHooks.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
     },
-    files: ['apps/web/**'],
+    files: ['app/web/**'],
   },
 
   {

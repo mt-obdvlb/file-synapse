@@ -32,7 +32,7 @@ export const UserService = {
   get: async (userId: string): Promise<UserGet> => {
     const user = await prisma.user.findUnique({
       where: { id: Number(userId) },
-      select: { id: true, username: true },
+      select: { id: true, username: true, role: true },
     })
 
     if (!user) throw new HttpError(404, '用户不存在')
@@ -40,6 +40,7 @@ export const UserService = {
     return {
       id: user.id.toString(),
       username: user.username,
+      isAdmin: user.role === 1,
     }
   },
 
