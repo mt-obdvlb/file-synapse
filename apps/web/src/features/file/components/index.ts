@@ -1,2 +1,5 @@
+export * from './FilePagination'
 export * from './FilePreviewItem'
+export * from './FileTable'
+export * from './FileWrapper'
 export * from './upload/index'

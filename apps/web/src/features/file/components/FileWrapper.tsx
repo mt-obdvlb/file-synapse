@@ -27,15 +27,6 @@ const FileWrapper = () => {
     type: type === 'all' ? undefined : type,
   })
 
-  if (fileList.length === 0)
-    return (
-      <>
-        <div className={'size-full justify-center flex items-center'}>
-          <span className={'font-bold text-xl'}>暂无数据</span>
-        </div>
-      </>
-    )
-
   return (
     <div className={'mx-auto w-300 py-30'}>
       <div className={'flex justify-between items-center mb-4'}>
@@ -78,35 +69,45 @@ const FileWrapper = () => {
           清空筛选
         </Button>
       </div>
-      <FileTable fileList={fileList} />
-      <div className={'w-fit mx-auto flex justify-start items-center whitespace-nowrap'}>
-        <div className={'mr-11 flex items-center justify-start'}>
-          <FilePagination page={page} setPage={setPage} total={total} pageSize={20} />
-        </div>
-        <div className={'text-text1 flex items-center '}>
-          <span className={'mr-2'}>{`共 ${Math.ceil(total / 20)} 页 / ${total} 个，跳至`}</span>
-          <div
-            className={'w-[50px] overflow-hidden inline-flex grow relative   text-4 rounded-md '}
-          >
-            <Input
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  const page = Number(e.currentTarget.value)
-                  if (page < 1 || page > Math.ceil(total / 20)) {
-                    e.currentTarget.value = ''
-                    return
-                  }
-                  setPage(page)
-                  e.currentTarget.blur()
-                  e.currentTarget.value = ''
+      {fileList.length > 0 ? (
+        <>
+          <FileTable fileList={fileList} />
+          <div className={'w-fit mx-auto flex justify-start items-center whitespace-nowrap'}>
+            <div className={'mr-11 flex items-center justify-start'}>
+              <FilePagination page={page} setPage={setPage} total={total} pageSize={20} />
+            </div>
+            <div className={'text-text1 flex items-center '}>
+              <span className={'mr-2'}>{`共 ${Math.ceil(total / 20)} 页 / ${total} 个，跳至`}</span>
+              <div
+                className={
+                  'w-[50px] overflow-hidden inline-flex grow relative   text-4 rounded-md '
                 }
-              }}
-              className={'h-8 leading-[1.5]  w-full '}
-            />
+              >
+                <Input
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const page = Number(e.currentTarget.value)
+                      if (page < 1 || page > Math.ceil(total / 20)) {
+                        e.currentTarget.value = ''
+                        return
+                      }
+                      setPage(page)
+                      e.currentTarget.blur()
+                      e.currentTarget.value = ''
+                    }
+                  }}
+                  className={'h-8 leading-[1.5]  w-full '}
+                />
+              </div>
+              <span className={'ml-2'}>页</span>
+            </div>
           </div>
-          <span className={'ml-2'}>页</span>
+        </>
+      ) : (
+        <div className={'size-full justify-center mt-20 flex items-center'}>
+          <span className={'font-bold text-xl'}>暂无数据</span>
         </div>
-      </div>
+      )}
     </div>
   )
 }
