@@ -46,7 +46,7 @@ export const useUser = () => {
 export const useUserGet = () => {
   const setUser = useUserStore((state) => state.setUser)
 
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: userGet,
   })
@@ -59,5 +59,6 @@ export const useUserGet = () => {
 
   return {
     user: data?.data,
+    isPending,
   }
 }

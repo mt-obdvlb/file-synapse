@@ -13,7 +13,7 @@ const WithAuth = async ({ children }: { children: ReactNode }) => {
         <LayoutHeaderWrapper />
       </header>
       <main className={'h-[calc(100%-100px)]'}>{children}</main>
-      <nav className={'fixed bottom-25 inset-x-0'}>
+      <nav className={'fixed bottom-25 inset-x-0 pointer-events-none'}>
         <LayoutDashBoard />
       </nav>
     </div>

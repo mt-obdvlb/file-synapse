@@ -12,13 +12,17 @@ import { tv } from 'tailwind-variants'
 import { cn } from '@/libs'
 import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-const UserProfileForm = ({
+interface UserProfileFormProps<T extends FieldValues> {
+  onSubmit: SubmitHandler<T>
+  form: UseFormReturn<T>
+  title: string
+}
+
+const UserProfileForm = <T extends FieldValues>({
   onSubmit,
   form,
-}: {
-  onSubmit: SubmitHandler<FieldValues>
-  form: UseFormReturn
-}) => {
+  title,
+}: UserProfileFormProps<T>) => {
   const formStyles = tv({
     slots: {
       item: cn('flex flex-col pr-10'),
@@ -88,7 +92,7 @@ const UserProfileForm = ({
           className='mt-3 w-35 mx-auto cursor-pointer'
           disabled={form.formState.isSubmitting}
         >
-          保存修改
+          {title}
         </Button>
       </form>
     </Form>

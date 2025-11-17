@@ -12,7 +12,7 @@ const UserProfileWrapper = () => {
   const { user } = useUserGet()
   const { userUpdate } = useUser()
 
-  const form = useForm({
+  const form = useForm<UserUpdateDTO>({
     resolver: zodResolver(userUpdateDTO),
     defaultValues: {
       username: user?.username || '',
@@ -44,7 +44,7 @@ const UserProfileWrapper = () => {
     })
   }
 
-  return <UserProfileForm form={form} onSubmit={onSubmit} />
+  return <UserProfileForm form={form} onSubmit={onSubmit} title={'保存修改'} />
 }
 
 export default UserProfileWrapper

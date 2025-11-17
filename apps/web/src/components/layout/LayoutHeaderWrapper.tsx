@@ -14,22 +14,25 @@ const titleMap = {
   '/user': '新增用户',
   '/file': '文件管理',
   '/log': '日志管理',
+  '/upload': '上传文件',
 } as Record<string, string>
 
 const LayoutHeaderWrapper = () => {
   useUserGet()
-  const [title, setTitle] = useState('文件管理系统')
+  const [title, setTitle] = useState('')
   const pathname = usePathname()
   const router = useRouter()
   const { userLogout } = useUser()
   useEffect(() => {
-    setTitle(titleMap[pathname] || '文件管理系统')
+    setTitle(titleMap[pathname] || '')
   }, [pathname])
 
   return (
     <div className={'h-full flex justify-between items-center px-16 flex-nowrap'}>
       <h1 onClick={() => router.push('/')} className={'cursor-pointer'}>
-        <LineShadowText className={'italic w-100 font-bold text-5xl '}>{title}</LineShadowText>
+        {!!title && (
+          <LineShadowText className={'italic w-100 font-bold text-5xl '}>{title}</LineShadowText>
+        )}
       </h1>
       <div className={'flex items-center gap-30 '}>
         <AnimatedThemeToggler className={'size-10'} />

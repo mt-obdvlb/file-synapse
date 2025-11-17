@@ -26,11 +26,18 @@ export const fileList = (params: FileGetDTO) =>
     params,
   })
 
-export const fileUpload = (
-  data: {
-    file: File
-  } & FileUploadDTO
-) => request.post<Result>(`${baseURL}${API.upload}`, data)
+export const fileUpload = (data: { file: File } & FileUploadDTO) => {
+  const formData = new FormData()
+  formData.append('file', data.file)
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (key !== 'file' && value !== undefined) {
+      formData.append(key, String(value))
+    }
+  })
+
+  return request.post<Result>(`${baseURL}${API.upload}`, formData)
+}
 
 export const fileDelete = (id: string) => request.delete<Result>(`${baseURL}${API.delete}${id}`)
 

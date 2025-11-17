@@ -1,7 +1,11 @@
-import WithAdmin from '@/components/hoc/WithAdmin'
+import UserProfileRegisterWrapper from '@/features/user/components/UserProfileRegisterWrapper'
 
 const User = () => {
-  return <WithAdmin>User</WithAdmin>
+  return (
+    <div className={'h-full flex items-center justify-center'}>
+      <UserProfileRegisterWrapper />
+    </div>
+  )
 }
 
 export default User
