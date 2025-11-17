@@ -41,4 +41,4 @@ export const fileUpload = (data: { file: File } & FileUploadDTO) => {
 
 export const fileDelete = (id: string) => request.delete<Result>(`${baseURL}${API.delete}${id}`)
 
-export const fileDownload = (id: string) => request.get<Result>(`${baseURL}${API.download}${id}`)
+export const fileDownload = (id: string) => request.post<Result>(`${baseURL}${API.download}/${id}`)

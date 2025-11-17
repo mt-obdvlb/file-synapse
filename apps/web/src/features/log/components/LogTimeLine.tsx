@@ -71,9 +71,6 @@ const LogTimeLine = () => {
 
   return (
     <div className='p-8 w-300 mx-auto min-h-full '>
-      <h2 className='text-2xl font-bold mb-6'>操作记录时间线</h2>
-
-      {/* 筛选 */}
       <div className='flex items-center justify-end gap-4 mb-10 flex-wrap'>
         <Select
           value={operationType}
@@ -114,7 +111,6 @@ const LogTimeLine = () => {
         </Button>
       </div>
 
-      {/* Timeline */}
       <div>
         <div className='relative'>
           <div className={start()} />
@@ -141,7 +137,6 @@ const LogTimeLine = () => {
         </div>
       </div>
 
-      {/* 无限滚动触发点 */}
       <div ref={emptyRef} className='py-30 text-center text-sm text-gray-500'>
         {isFetchingNextPage ? '加载中...' : '已经到底了~'}
       </div>

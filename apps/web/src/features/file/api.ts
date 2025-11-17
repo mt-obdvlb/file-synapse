@@ -21,8 +21,8 @@ export const useFileList = (params: FileGetDTO) => {
     queryFn: () => fileList(params),
   })
   return {
-    fileList: data?.data?.list,
-    total: data?.data?.total,
+    fileList: data?.data?.list ?? [],
+    total: data?.data?.total ?? 0,
   }
 }
 

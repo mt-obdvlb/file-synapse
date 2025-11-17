@@ -18,7 +18,12 @@ router.post(
   validatorMiddleware({ body: fileUploadDTO }),
   asyncHandler(fileUpload)
 )
-router.delete('/', authMiddleware, validatorMiddleware({ params: idDTO }), asyncHandler(fileDelete))
+router.delete(
+  '/:id',
+  authMiddleware,
+  validatorMiddleware({ params: idDTO }),
+  asyncHandler(fileDelete)
+)
 router.post(
   '/download/:id',
   authMiddleware,

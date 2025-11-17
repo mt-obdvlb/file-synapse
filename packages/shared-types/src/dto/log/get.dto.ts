@@ -14,7 +14,7 @@ export const logGetDTO = z.object({
     .default(10),
   username: z.string().optional(),
   operationType: z
-    .enum(['DELETE', 'LOGIN', 'DOWNLOAD', 'UPLOAD', 'UPDATE_USER'] satisfies OperationType[], {
+    .enum(['LOGIN', 'DOWNLOAD', 'UPLOAD', 'UPDATE_USER'] satisfies OperationType[], {
       message: '操作类型不合法',
     })
     .optional(),

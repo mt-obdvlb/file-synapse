@@ -65,7 +65,7 @@ export const fileDelete: RequestHandler<ParamsDictionary, Result> = async (req, 
   const userId = req.user?.id
   const isAdmin = req.user?.isAdmin
   const fileId = req.params.id
-
+  console.log('delete', 123)
   if (!userId) {
     return res.status(401).json({
       code: 1,
@@ -79,6 +79,7 @@ export const fileDelete: RequestHandler<ParamsDictionary, Result> = async (req, 
       message: MESSAGE.INVALID_PARAMS,
     })
   }
+  console.log('delete', userId, isAdmin, fileId)
 
   await FileService.delete(userId, isAdmin, fileId)
 

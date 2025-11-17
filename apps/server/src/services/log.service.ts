@@ -1,7 +1,5 @@
 import { FileType, LogGetDTO, LogGetList, OperationType } from '@mtobdvlb/shared-types'
 import { prisma } from '@/prisma'
-import { HttpError } from '@/utils'
-import { MESSAGE } from '@/constants'
 
 export const LogService = {
   // =============================
@@ -77,12 +75,6 @@ export const LogService = {
     userId: string
     fileId?: string
   }) => {
-    if (fileId) {
-      const file = await prisma.file.findUnique({
-        where: { id: Number(fileId) },
-      })
-      if (!file) throw new HttpError(400, MESSAGE.FILE_NOT_FOUND)
-    }
     await prisma.operationLog.create({
       data: {
         userId: Number(userId),

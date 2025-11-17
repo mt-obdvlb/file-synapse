@@ -49,7 +49,7 @@ export const useUserGet = () => {
   const { data, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: userGet,
-    retry: false,
+    retry: 1,
   })
 
   useEffect(() => {

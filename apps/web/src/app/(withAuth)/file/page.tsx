@@ -1,5 +1,7 @@
+import FileWrapper from '@/features/file/components/FileWrapper'
+
 const File = () => {
-  return <>File</>
+  return <FileWrapper />
 }
 
 export default File

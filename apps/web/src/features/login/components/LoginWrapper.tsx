@@ -84,7 +84,7 @@ const LoginWrapper = () => {
             />
           </CardContent>
           <CardFooter>
-            <InteractiveHoverButton className={'ml-auto rounded-md w-50'} type={'submit'}>
+            <InteractiveHoverButton className={'mx-auto rounded-md w-50'} type={'submit'}>
               登录
             </InteractiveHoverButton>
           </CardFooter>

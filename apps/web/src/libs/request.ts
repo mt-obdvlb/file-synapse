@@ -1,8 +1,6 @@
 import axios, { type AxiosError, AxiosHeaders, type AxiosInstance, type AxiosResponse } from 'axios'
 import { isServer } from '@/utils'
 import { toast } from 'sonner'
-import { useUserStore } from '@/features'
-import { usePathname } from 'next/navigation'
 
 const request: AxiosInstance = (() => {
   const instance = axios.create({
@@ -43,21 +41,28 @@ const request: AxiosInstance = (() => {
     async (error: AxiosError) => {
       if (error.response?.status === 401) {
         if (!isServer()) {
-          const pathname = usePathname()
+          const pathname = window.location.pathname
           if (pathname === '/login') {
             return {
               code: 1,
               message: '请重新登录',
             }
           }
-          toast('请重新登录')
-          const { clearUser } = useUserStore()
-          clearUser()
           window.location.href = '/login'
         }
         return {
           code: 1,
           message: '请重新登录',
+        }
+      }
+
+      if (error.response?.status === 404) {
+        if (!isServer()) {
+          toast('未找到该文件')
+        }
+        return {
+          code: 1,
+          message: '未找到该文件',
         }
       }
 

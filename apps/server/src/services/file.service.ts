@@ -154,22 +154,16 @@ export const FileService = {
   // =============================
   delete: async (userId: string, isAdmin?: boolean, fileId?: string) => {
     if (!fileId) throw new HttpError(400, '文件ID必填')
-
+    console.log(123)
     const file = await prisma.file.findUnique({ where: { id: Number(fileId) } })
-    if (!file) throw new HttpError(404, '文件不存在')
-
+    console.log(file)
+    if (!file) throw new HttpError(400, '文件不存在')
+    console.log(456)
     if (file.uploaderId !== Number(userId) && !isAdmin) {
       throw new HttpError(403, '无权限删除')
     }
+    console.log(789)
 
     await prisma.file.delete({ where: { id: file.id } })
-
-    await LogService.log({
-      userId: userId,
-      fileId: file.id.toString(),
-      operation: 'DELETE',
-    })
-
-    return { message: '删除成功' }
   },
 }

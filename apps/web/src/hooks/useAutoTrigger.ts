@@ -14,7 +14,7 @@ export const useAutoTrigger = (callback: () => void, seconds: number = 5) => {
   }, [])
 
   useEffect(() => {
-    setRemaining(seconds)
+    if (timerRef.current) return // 防止重复启动
 
     timerRef.current = setInterval(() => {
       setRemaining((prev) => {
@@ -28,7 +28,7 @@ export const useAutoTrigger = (callback: () => void, seconds: number = 5) => {
     }, 1000)
 
     return () => clearTimer()
-  }, [seconds, callback, clearTimer])
+  }, [callback, clearTimer])
 
   return { remaining }
 }

@@ -20,7 +20,6 @@ type Props = {
 const operationTypeMap: Record<OperationType, string> = {
   UPLOAD: '上传',
   DOWNLOAD: '下载',
-  DELETE: '删除',
   LOGIN: '登录',
   UPDATE_USER: '更新用户',
 }
@@ -212,7 +211,6 @@ const LogTimeLineItem: React.FC<Props> = ({
                   'cursor-pointer hover:scale-[1.02] transition-all duration-300',
                   // 为不同操作类型添加细微颜色区分
                   item.log.operationType === 'UPLOAD' && 'hover:shadow-green-100',
-                  item.log.operationType === 'DELETE' && 'hover:shadow-red-100',
                   item.log.operationType === 'UPDATE_USER' && 'hover:shadow-blue-100'
                 )}
                 onClick={() => setFlippedId(isFlipped ? null : item.log.id)}
@@ -240,11 +238,9 @@ const LogTimeLineItem: React.FC<Props> = ({
                 ${
                   item.log.operationType === 'UPLOAD'
                     ? 'bg-green-100 text-green-700'
-                    : item.log.operationType === 'DELETE'
-                      ? 'bg-red-100 text-red-700'
-                      : item.log.operationType === 'UPDATE_USER'
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'bg-gray-100 text-gray-700'
+                    : item.log.operationType === 'UPDATE_USER'
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'bg-gray-100 text-gray-700'
                 }`}
                       >
                         {operationTypeMap[item.log.operationType]}

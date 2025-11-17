@@ -9,7 +9,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
+        protocol: 'http',
         hostname: 'mtobdvlb-web.oss-cn-beijing.aliyuncs.com',
         pathname: '/**', // ** 表示匹配任意子路径
       },
