@@ -75,7 +75,7 @@ export const userLogin: RequestHandler<ParamsDictionary, Result, UserLoginDTO> =
   res.cookie('access_token', accessToken, {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: 'none',
+    sameSite: 'strict',
     secure: true,
   })
   return res.status(200).json({

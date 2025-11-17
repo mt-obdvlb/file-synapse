@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 
 const WithAuth = async ({ children }: { children: ReactNode }) => {
   const { data } = await userGet()
+  console.log(data)
   if (!data?.id) {
     redirect('/login')
   }

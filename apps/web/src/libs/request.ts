@@ -1,6 +1,5 @@
-import axios, { type AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { type AxiosError, AxiosHeaders, type AxiosInstance, type AxiosResponse } from 'axios'
 import { isServer } from '@/utils'
-import { redirect } from 'next/navigation'
 import { toast } from 'sonner'
 
 const request: AxiosInstance = (() => {
@@ -12,6 +11,24 @@ const request: AxiosInstance = (() => {
 
   // —— request interceptor
   instance.interceptors.request.use(async (config) => {
+    const headers = new AxiosHeaders(config.headers)
+
+    if (isServer()) {
+      // SSR 下才手动注入 Cookie
+      const { cookies } = await import('next/headers')
+      const cookieStore = await cookies()
+      const accessToken = cookieStore.get('access_token')?.value
+
+      const cookieHeader = [accessToken ? `access_token=${accessToken}` : '']
+        .filter(Boolean)
+        .join('; ')
+
+      if (cookieHeader) {
+        headers.set('Cookie', cookieHeader)
+      }
+    }
+
+    config.headers = headers
     return config
   })
 
@@ -25,8 +42,12 @@ const request: AxiosInstance = (() => {
       if (error.response?.status === 401) {
         if (!isServer()) {
           toast('请重新登录')
+          window.location.href = '/login'
         }
-        redirect('/login')
+        return {
+          code: 1,
+          message: '请重新登录',
+        }
       }
 
       // 其他错误

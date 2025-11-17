@@ -1,11 +1,9 @@
-'use client'
-
-import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler'
+import LoginWrapper from '@/features/login/components/LoginWrapper'
 
 const Login = () => {
   return (
     <div className={'size-full flex items-center justify-center bg-primary-foreground'}>
-      <AnimatedThemeToggler />
+      <LoginWrapper />
     </div>
   )
 }
