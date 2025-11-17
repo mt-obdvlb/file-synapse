@@ -1,6 +1,7 @@
 export * from './alert-dialog'
 export * from './animated-theme-toggler'
 export * from './avatar'
+export * from './bento-grid'
 export * from './border-beam'
 export * from './button'
 export * from './card'
