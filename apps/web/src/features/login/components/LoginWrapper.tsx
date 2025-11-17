@@ -19,7 +19,7 @@ import { userLoginDTO, UserLoginDTO } from '@mtobdvlb/shared-types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button'
 import { Input } from '@/components/ui/input'
-import { useUser, useUserStore } from '@/features'
+import { useUser, useUserGet } from '@/features'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -35,14 +35,14 @@ const LoginWrapper = () => {
   })
 
   const { userLogin } = useUser()
-  const { user } = useUserStore()
+  const { user } = useUserGet()
   const router = useRouter()
 
   useEffect(() => {
-    if (user.id) {
+    if (user?.id) {
       router.push('/')
     }
-  }, [user.id])
+  }, [user?.id])
 
   const onSubmit = async (data: UserLoginDTO) => {
     const { code } = await userLogin(data)

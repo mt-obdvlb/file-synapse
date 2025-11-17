@@ -70,7 +70,7 @@ export const AnimatedThemeToggler = ({
 
   return (
     <button ref={buttonRef} onClick={toggleTheme} className={cn(className)} {...props}>
-      {isDark ? <Sun /> : <Moon />}
+      {isDark ? <Sun className={'size-full'} /> : <Moon className={'size-full'} />}
     </button>
   )
 }

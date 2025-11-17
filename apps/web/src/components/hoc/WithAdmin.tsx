@@ -5,7 +5,9 @@ import { useUserStore } from '@/features/user/store'
 
 const WithAdmin = ({ children }: { children: ReactNode }) => {
   const user = useUserStore((state) => state.user)
-  if (!user.isAdmin) return null
+  if (!user.isAdmin) {
+    return null
+  }
 
   return children
 }

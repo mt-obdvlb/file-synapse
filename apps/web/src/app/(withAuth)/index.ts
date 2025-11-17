@@ -1,4 +1,6 @@
 export * from './layout'
 export * from './page'
+export * from './file/index'
 export * from './log/index'
 export * from './profile/index'
+export * from './user/index'

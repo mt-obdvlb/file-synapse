@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { userGet, userLogin, userRegister, userUpdate } from '@/controllers'
+import { userGet, userLogin, userLogout, userRegister, userUpdate } from '@/controllers'
 import { asyncHandler } from '@/utils'
 import { authMiddleware, validatorMiddleware } from '@/middlewares'
 import { userLoginDTO, userRegisterDTO, userUpdateDTO } from '@mtobdvlb/shared-types'
@@ -20,5 +20,6 @@ router.put(
   asyncHandler(userUpdate)
 )
 router.post('/login', validatorMiddleware({ body: userLoginDTO }), asyncHandler(userLogin))
+router.post('/logout', authMiddleware, asyncHandler(userLogout))
 
 export default router

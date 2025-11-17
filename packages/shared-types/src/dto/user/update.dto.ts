@@ -8,19 +8,21 @@ export const userUpdateDTO = z
       .max(20, { message: '用户名长度不能超过20位' })
       .optional(),
     password: z
-      .string({ message: '密码不能为空' })
-      .min(8, { message: '密码长度不能少于8位' })
-      .max(20, { message: '密码长度不能超过20位' })
-      .optional(),
-    confirmedPassword: z
-      .string({ message: '确认密码不能为空' })
-      .min(8, { message: '确认密码长度不能少于8位' })
-      .max(20, { message: '确认密码长度不能超过20位' })
-      .optional(),
+      .string()
+      .optional()
+      .refine((val) => !val || val.length >= 8, { message: '密码长度不能少于8位' })
+      .refine((val) => !val || val.length <= 20, { message: '密码长度不能超过20位' }),
+    confirmedPassword: z.string().optional(),
   })
-  .refine((data) => !data.password || data.password === data.confirmedPassword, {
-    message: '两次输入的密码不一致',
-    path: ['confirmedPassword'],
+  .superRefine(({ password, confirmedPassword }, ctx) => {
+    // 只有 password 有值时才检查一致性
+    if (password && password !== confirmedPassword) {
+      ctx.addIssue({
+        path: ['confirmedPassword'],
+        message: '两次输入的密码不一致',
+        code: 'custom',
+      })
+    }
   })
 
 export type UserUpdateDTO = z.infer<typeof userUpdateDTO>

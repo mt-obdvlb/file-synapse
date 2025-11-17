@@ -82,3 +82,10 @@ export const userLogin: RequestHandler<ParamsDictionary, Result, UserLoginDTO> =
     code: 0,
   })
 }
+
+export const userLogout: RequestHandler = async (req, res) => {
+  res.clearCookie('access_token')
+  return res.status(200).json({
+    code: 0,
+  })
+}
