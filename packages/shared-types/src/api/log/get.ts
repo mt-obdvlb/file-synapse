@@ -3,6 +3,8 @@ import { FileType, OperationType } from '@/common'
 export type LogGetItem = {
   log: {
     operationType: OperationType
+    operationTime: string
+    id: string
   }
   file?: {
     id: string

@@ -12,7 +12,7 @@ export const logGetDTO = z.object({
     .min(1, { message: '每页数量不能小于1' })
     .max(100, { message: '每页数量不能超过100' })
     .default(10),
-  userId: z.coerce.number({ message: '用户ID必须是数字' }).optional(),
+  username: z.string().optional(),
   operationType: z
     .enum(['DELETE', 'LOGIN', 'DOWNLOAD', 'UPLOAD', 'UPDATE_USER'] satisfies OperationType[], {
       message: '操作类型不合法',

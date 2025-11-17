@@ -10,14 +10,22 @@ export const LogService = {
   list: async ({
     pageSize = 20,
     page = 1,
-    userId,
     operationType,
+    username,
   }: LogGetDTO): Promise<{ total: number; list: LogGetList }> => {
-    const where: { userId?: number; operation?: OperationType } = {}
+    const where: {
+      operation?: OperationType
+      user?: { username?: string }
+    } = {}
 
-    if (userId) where.userId = Number(userId)
-    if (operationType) where.operation = operationType
+    if (operationType) {
+      where.operation = operationType
+    }
 
+    if (username) {
+      // user.username 是 relation filter
+      where.user = { username }
+    }
     const total = await prisma.operationLog.count({ where })
 
     const logs = await prisma.operationLog.findMany({
@@ -34,6 +42,8 @@ export const LogService = {
     const list: LogGetList = logs.map((l) => ({
       log: {
         operationType: l.operation as OperationType,
+        operationTime: l.operationTime.toISOString(),
+        id: l.id.toString(),
       },
       user: {
         id: l.user.id.toString(),
