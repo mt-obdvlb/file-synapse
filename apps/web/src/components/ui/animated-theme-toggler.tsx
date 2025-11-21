@@ -72,7 +72,7 @@ export const AnimatedThemeToggler = ({
     <button
       ref={buttonRef}
       onClick={toggleTheme}
-      className={cn('cursor-pointer', className)}
+      className={cn('cursor-pointer ', className)}
       {...props}
     >
       {isDark ? <Sun className={'size-full'} /> : <Moon className={'size-full'} />}
